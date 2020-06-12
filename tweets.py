@@ -5,9 +5,12 @@ from datetime import datetime, date, timedelta
 
 searches=["भेनचोद","भोसडीके","चुदाई","कुत्ते","मुल्ले","दलाल","नीच","गाँड","हरामी","रंडी","सूअर","भड़वा","गांड","लुंड","माधरचोद","मादरचोद","बहनचोद","भेनचोद","#भोसडीके","#चुदाई","#कुत्ते","#मुल्ले","#दलाल","#नीच","#गाँड","#हरामी","#रंडी","#सूअर","#भड़वा","#गांड","#लुंड","#माधरचोद","#मादरचोद","#बहनचोद"]
 query = " OR ".join(searches)
-results = []
 
-def DownloadTweets(SinceDate, UntilDate, Query, update_days=30, max_tweets=1000, sleep=300):
+def save(filename, tweets):
+    with open('save.pkl', 'wb+') as f:
+        pickle.dump(tweets, f)
+
+def DownloadTweets(SinceDate, UntilDate, Query=query, update_days=30, max_tweets=1000, sleep=300):
     '''
     Downloads all tweets from a certain month in three sessions in order to avoid sending too many requests. 
     Date format = 'yyyy-mm-dd'. 
