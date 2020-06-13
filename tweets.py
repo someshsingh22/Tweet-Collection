@@ -2,6 +2,7 @@
 import GetOldTweets3 as got
 import time, json, pickle
 from datetime import datetime, date, timedelta
+import pandas as pd
 
 searches=["भेनचोद","भोसडीके","चुदाई","कुत्ते","मुल्ले","दलाल","नीच","गाँड","हरामी","रंडी","सूअर","भड़वा","गांड","लुंड","माधरचोद","मादरचोद","बहनचोद","भेनचोद","#भोसडीके","#चुदाई","#कुत्ते","#मुल्ले","#दलाल","#नीच","#गाँड","#हरामी","#रंडी","#सूअर","#भड़वा","#गांड","#लुंड","#माधरचोद","#मादरचोद","#बहनचोद"]
 query = " OR ".join(searches)
@@ -9,6 +10,12 @@ query = " OR ".join(searches)
 def save(filename, tweets):
     with open('save.pkl', 'wb+') as f:
         pickle.dump(tweets, f)
+
+def load_to_csv(pickle_dir):
+    with open(pickle_dir, 'rb') as f:
+        dump = pickle.load(f)
+        tweets = [vars(tweet) for tweet in dump]
+    return pd.DataFrame(tweets)
 
 def DownloadTweets(SinceDate, UntilDate, Query=query, update_days=30, max_tweets=1000, sleep=300):
     '''
