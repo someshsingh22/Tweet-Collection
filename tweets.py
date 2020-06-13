@@ -21,10 +21,13 @@ def DownloadTweets(SinceDate, UntilDate, Query=query, update_days=30, max_tweets
     current = since
     results = []
     while(current < until):
-        batch_criteria = got.manager.TweetCriteria().setQuerySearch(Query).setSince(current.strftime('%Y-%m-%d')).setUntil((current + timedelta(days = update_days)).strftime('%Y-%m-%d')).setLang('hi').setMaxTweets(max_tweets)
-        current = current + timedelta(days = update_days)
-        batch_tweets = got.manager.TweetManager.getTweets(batch_criteria)
-        results.extend(batch_tweets)
-        print("Retrieving tweets from :" + current.strftime('%Y-%m-%d'), " to ", (current + timedelta(days = update_days)).strftime('%Y-%m-%d'))
-        time.sleep(sleep)
+        try:
+            batch_criteria = got.manager.TweetCriteria().setQuerySearch(Query).setSince(current.strftime('%Y-%m-%d')).setUntil((current + timedelta(days = update_days)).strftime('%Y-%m-%d')).setLang('hi').setMaxTweets(max_tweets)
+            current = current + timedelta(days = update_days)
+            batch_tweets = got.manager.TweetManager.getTweets(batch_criteria)
+            results.extend(batch_tweets)
+            print("Retrieving tweets from :" + current.strftime('%Y-%m-%d'), " to ", (current + timedelta(days = update_days)).strftime('%Y-%m-%d'))
+            time.sleep(sleep)
+        except:
+            pass
     return results
